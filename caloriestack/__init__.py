@@ -8,9 +8,7 @@ app = Flask(__name__,
 	static_url_path='')
 
 # Get production DB details, or fall back to dev DB
-dburl = os.environ.get('DATABASE_URL')
-if dburl is None:
-	dburl = 'postgresql://caloriestack:caloriestack@localhost/caloriestack'
+dburl = os.environ.get('DATABASE_URL', 'postgresql://caloriestack:caloriestack@localhost/caloriestack')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = dburl
 db = SQLAlchemy(app)
