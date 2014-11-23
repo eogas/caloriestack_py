@@ -1,9 +1,11 @@
 import os
 
 # Get auto assigned port, or fall back to 5000
-port = os.environ['PORT']
+port = os.environ.get('PORT')
 if port is None:
 	port = 5000
 
 from caloriestack import app
-app.run(debug=False, port=port)
+
+if __name__ == '__main__':
+	app.run(debug=False, port=port)
