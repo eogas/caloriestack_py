@@ -7,6 +7,7 @@ app = Flask(__name__,
 	static_folder='static',
 	static_url_path='')
 
+# Get production DB details, or fall back to dev DB
 dburl = os.environ.get('DATABASE_URL')
 if dburl is None:
 	dburl = 'postgresql://caloriestack:caloriestack@localhost/caloriestack'
