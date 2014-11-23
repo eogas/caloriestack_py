@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<script src="/js/main.js"></script>
+
+<div class="container-fluid" ng-controller="FoodCtrl" ng-init="init('{{stackId}}', {{year}}, {{month}}, {{day}})">
+
+<div class="row">
+	<div class="col-md-8">
+		<h1>CalorieStack <span class="badge bigBadge" ng-bind="dayCals()"></span></h1>
+	</div>
+	<div class="col-md-4">
+        <div class="form-group control-panel">
+            <div class='input-group date' id='datepicker'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                	<span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <!--div class='input-group date' id='datepicker'>
+            <input type='text' class="form-control" />
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div-->
+	</div>
+</div>
+
+<div ng-if="stack.reminder" class="row">
+	<div class="col-md-12">
+		<div class="alert alert-info" role="alert">
+  			<button type="button" class="close" data-dismiss="alert">
+  				<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+  			</button>
+  			Don't forget to <strong>save the URL</strong> to this stack as a bookmark.
+  			<!-- TODO button type="button">I already did!</button>
+  			<button type="button">How do I do that?</button -->
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-4" ng-repeat="meal in meals">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="panel-title" ng-bind="meal.name"></span>
+				<span class="badge" ng-bind="mealCals(meal)"></span>
+			</div>
+			<div class="panel-body">
+				<ul class="list-group">
+					<div class="list-group-item"
+					ng-click="itemSelect(item)"
+					ng-repeat="item in meal.items">
+						<!-- static item display -->
+						<span ng-if="item.state == ItemStateEnum.View">[[item.name]]</span>
+						<span ng-if="item.state == ItemStateEnum.View" class="badge">[[item.cals]]</span>
+
+						<!-- item edit form -->
+						<form name="editForm" ng-if="item.state == ItemStateEnum.Edit" role="form"
+						ng-click="$event.stopPropagation()">
+							<div class="form-group">
+								<input ng-model="item.name" type="text" class="form-control" placeholder="food" />
+							</div>
+							<div class="form-group">
+								<input ng-model="item.cals" type="number" class="form-control" placeholder="calories" />
+							</div>
+
+							<button class="btn btn-small btn-primary" ng-click="saveEdit(item, $event)" type="submit" >
+								<span class="glyphicon glyphicon-ok"></span> Save
+							</button>
+							<button class="btn btn-small btn-default" ng-click="cancelEdit(item, $event)">Cancel</button>
+
+							<button type="button" class="btn btn-small btn-danger btn-small pull-right" ng-click="deleteItem(item, meal, $index)">
+								<span class="glyphicon glyphicon-remove"></span> Delete
+							</button>
+						</form>
+					</div>
+				</ul>
+
+				<!-- item add form -->
+				<form name="addForm" ng-if="meal.state == MealStateEnum.Add" role="form" ng-click="$event.stopPropagation()">
+					<h4>New Item</h4>
+					<div class="form-group">
+						<input ng-model="newItem.name" type="text" class="form-control" placeholder="food" />
+					</div>
+					<div class="form-group">
+						<input ng-model="newItem.cals" type="number" class="form-control" placeholder="calories" />
+					</div>
+					<button class="btn btn-small btn-primary" ng-click="saveAdd(meal, newItem)" type="submit">
+						<span class="glyphicon glyphicon-ok"></span> Save
+					</button>
+					<button class="btn btn-small btn-default" ng-click="cancelAdd(meal, newItem)">Cancel</button>
+				</form>
+
+				<!-- add item button -->
+				<button type="button" class="btn btn-primary btn-small pull-right" ng-click="addItem(meal)"
+					ng-if="meal.state == MealStateEnum.View">
+					<span class="glyphicon glyphicon-plus"></span> Add Item
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+{% endblock %}

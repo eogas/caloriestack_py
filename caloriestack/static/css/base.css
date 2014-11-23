@@ -1,0 +1,20 @@
+
+.control-panel {
+	margin: 1em;
+}
+
+/************************
+ Bootstrap customizations
+ ************************/
+
+h1 > .badge {
+	font-size: .8em;
+	background-color: #FF9C00;
+}
+
+.list-group-item:hover,
+.list-group-item:focus {
+	color: #555;
+	text-decoration: none;
+	background-color: #f5f5f5;
+}
