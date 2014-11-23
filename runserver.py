@@ -4,6 +4,8 @@ import os
 port = os.environ.get('PORT')
 if port is None:
 	port = 5000
+else:
+	port = int(port)
 
 from caloriestack import app
 
