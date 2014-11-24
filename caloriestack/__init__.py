@@ -32,8 +32,15 @@ for mealName in ['Breakfast', 'Lunch', 'Dinner']:
 	db.session.add(m)
 
 # TODO: Replace this with a script after switching to a real DB
-fi = FoodItem.FoodItem(name='Eggs', cals=200, meal=Meal.Meal.query.get(1))
-db.session.add(fi)
+eggs = FoodItem.FoodItem(name='Eggs', cals=156, meal=Meal.Meal.query.get(1))
+bacon = FoodItem.FoodItem(name='Bacon', cals=184, meal=Meal.Meal.query.get(1))
+db.session.add(eggs)
+db.session.add(bacon)
+
+burger = FoodItem.FoodItem(name='Burger', cals=550, meal=Meal.Meal.query.get(2))
+fries = FoodItem.FoodItem(name='Fries', cals=380, meal=Meal.Meal.query.get(2))
+db.session.add(burger)
+db.session.add(fries)
 
 db.session.commit()
 
